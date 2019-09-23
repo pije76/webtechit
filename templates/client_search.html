@@ -1,0 +1,12 @@
+<h1>Search Results</h1>
+
+{% if search_result %}
+	<ul>
+	{% for item in search_result %}
+		<li>{{ item.client_name }}</li>
+	{% endfor %}
+	</ul>
+	{% else %}
+	<p>No results.</p>
+{% endif %}
+<a href="/"><h2>Back</h2></a>

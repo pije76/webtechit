@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>WebIT Django assessment</title>
+</head>
+<body>
+	{% block content %}
+
+	<a href="/"><h1>Clients</h1></a>
+
+<table border="1">
+<thead>
+    <tr>
+    <th>
+    	<a href="{% url 'client_list' %}?orderby_name={% if orderby_name == 'desc' %}asc{% else %}desc{% endif %}">Name</a>
+    </th>
+    <th>
+    	<a href="{% url 'client_list' %}?orderby_email={% if orderby_email == 'desc' %}asc{% else %}desc{% endif %}">Email address</a>
+    </th>
+    <th>
+    	<a href="{% url 'client_list' %}?orderby_phone_number={% if orderby_phone_number == 'desc' %}asc{% else %}desc{% endif %}">Phone Number</a>
+    </th>
+    <th>
+    	<a href="{% url 'client_list' %}?orderby_suburb={% if orderby_suburb == 'desc' %}asc{% else %}desc{% endif %}">Suburb</a>
+    </th>
+    </tr>
+</thead>
+<tbody>
+    {% for item in clients %}
+    <tr>
+    <td><a href="{% url 'client_update' item.id %}">{{ item.client_name }}</a></td>
+    <td>{{ item.email_address }}</td>
+    <td>{{ item.phone_number }}</td>
+    <td>{{ item.address.suburb }}</td>
+    </tr>
+    {% endfor %}
+</tbody>
+</table>
+<br /><br />
+<a href="{% url 'client_new' %}">Submit New Client</a>
+<br /><br /><br /><br />
+<form action="{% url 'client_search' %}" method="get">
+  <input type="text" name="q" value="{{ request.GET.q }}" placeholder="Search...">
+  <select name="order_by" id="id_dropdown">
+      <option value="client_name" selected="selected">Name</option>
+      <option value="email_address">Email Address</option>
+      <option value="phone_number">Phone Number</option>
+      <option value="suburb">Suburb</option>
+  </select>
+  <button type="submit" class="save btn btn-default">Search</button>
+</form>
+<br /><br />
+{% endblock content %}
+
+	<h1>WebIT Django assessment</h1>
+	<h2>Purpose</h2>
+	<p>To check that your knowledge/research ability to use the Django framework meets what's required of a python role with WebIT.</p>
+
+	<h2>Assessments</h2>
+	<ol>
+		<li>Given the code in this repository, create a model to store a "Client", a client contains:</li>
+		<ul>
+			<li>a client name</li>
+			<li>their address (as street name, suburb, postcode and state)</li>
+			<li>a contact name</li>
+			<li>an email address</li>
+			<li>a phone number</li>
+			<li>Notes: the most commonly queried fields are suburb, client name and email address. There should be no duplicate client names.</li>
+		</ul>
+		<li>Write a view to create a new Client via a basic HTML form. Required fields for a client include:</li>
+		<ul>
+			<li>client name</li>
+			<li>email address</li>
+			<li>phone number</li>
+		</ul>
+		<li>Using the view from 2. as a basis. Add another view that can update a given Client record.</li>
+		<li>Create a view to list all Client records, including a search form. The view must include the following:</li>
+		<ul>
+			<li>a search by client name</li>
+			<li>a search by email address</li>
+			<li>a search by phone number</li>
+			<li>a search by client suburb</li>
+			<li>the ability to order by name, email address, phone number and suburb</li>
+			<li>each record should link to the update view from 3</li>
+		</ul>
+	</ol>
+</body>
+</html>
